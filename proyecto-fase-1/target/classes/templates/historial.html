@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Historial de Sesión - Guali</title>
+    <style>
+        body { font-family: Arial, sans-serif; background-color: #f4f4f4; margin: 0; padding: 20px; }
+        .navbar { background-color: #e8e8e8; padding: 10px 20px; display: flex; gap: 20px; align-items: center; border-bottom: 1px solid #ccc; margin-bottom: 20px; }
+        .navbar a { text-decoration: none; color: #333; font-weight: bold; }
+        .container { background: white; padding: 20px; border-radius: 8px; box-shadow: 0 0 10px rgba(0,0,0,0.1); max-width: 1000px; margin: auto; }
+        h2 { text-align: center; background: #333; color: white; padding: 10px; margin-top: 0; border-radius: 5px; }
+        table { width: 100%; border-collapse: collapse; margin-top: 15px; }
+        th, td { border: 1px solid #ddd; padding: 10px; text-align: left; }
+        th { background-color: #f2f2f2; }
+        .estado-completada { background-color: #4CAF50; color: white; padding: 4px 8px; border-radius: 12px; font-size: 12px; font-weight: bold; }
+        .estado-pendiente { background-color: #f44336; color: white; padding: 4px 8px; border-radius: 12px; font-size: 12px; font-weight: bold; }
+        .btn-cerrar { display: block; width: 100px; margin: 20px auto 0; padding: 10px; background: #2196F3; color: white; text-align: center; text-decoration: none; border-radius: 5px; }
+    </style>
+</head>
+<body>
+
+    <div class="navbar">
+        <span style="font-weight: bold;">guali.dev</span>
+        <a href="/lecciones">Lecciones</a>
+        <a href="#">Configuración</a>
+        <a href="/historial">Historial</a>
+        <a href="#">Ayuda</a>
+        <a th:if="${adminActual != null}" href="/admin/panel" style="margin-left:auto;">⚙ Panel admin (<span th:text="${adminActual}"></span>)</a>
+    </div>
+
+    <div class="container">
+        <h2>Historial de Sesión</h2>
+        
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Lección</th>
+                    <th>Fecha Inicio</th>
+                    <th>Fecha Final</th>
+                    <th>Estado</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="intento : ${historial}">
+                    <td th:text="${intento.id}"></td>
+                    <td th:text="${intento.leccionTitulo}"></td>
+                    <td th:text="${intento.fechaInicio != null ? #temporals.format(intento.fechaInicio, 'dd/MM/yyyy HH:mm') : 'N/A'}"></td>
+                    <td th:text="${intento.fechaFinal != null ? #temporals.format(intento.fechaFinal, 'dd/MM/yyyy HH:mm') : 'En curso'}"></td>
+                    <td>
+                        <span th:if="${intento.estado == 'COMPLETADA'}" class="estado-completada">Completada</span>
+                        <span th:if="${intento.estado == 'PENDIENTE'}" class="estado-pendiente">Pendiente</span>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+        <a href="/lecciones" class="btn-cerrar">Cerrar</a>
+    </div>
+
+</body>
+</html>

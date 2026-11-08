@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="es" data-theme="claro">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Guali &mdash; Práctica de Programación</title>
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<header class="menubar">
+  <div class="menubar__brand">guali<span>.dev</span></div>
+
+  <nav class="menubar__nav">
+    <div class="menu">
+      <button class="menu__trigger" data-menu="lecciones">Lecciones</button>
+      <div class="menu__panel" data-panel="lecciones">
+        <div class="menu__section-label">Abrir lección</div>
+        <ul class="menu__list" id="listaLecciones">
+          <li class="menu__empty">Cargando…</li>
+        </ul>
+        <button class="menu__item" id="btnCerrarLeccion">Cerrar lección</button>
+      </div>
+    </div>
+
+    <div class="menu">
+      <button class="menu__trigger" data-menu="configuracion">Configuración</button>
+      <div class="menu__panel" data-panel="configuracion">
+        <div class="menu__section-label">Tamaño de fuente</div>
+        <div class="menu__row">
+          <button class="menu__step" id="fontMenos" aria-label="Disminuir tamaño de fuente">A−</button>
+          <span class="menu__value" id="fontValor">14px</span>
+          <button class="menu__step" id="fontMas" aria-label="Aumentar tamaño de fuente">A+</button>
+        </div>
+
+        <div class="menu__section-label">Tema</div>
+        <div class="menu__row">
+          <button class="menu__pill is-active" data-tema="claro">Claro</button>
+          <button class="menu__pill" data-tema="oscuro">Oscuro</button>
+        </div>
+
+        <div class="menu__section-label">Administración</div>
+        <button class="menu__item" disabled title="Requiere autenticación de administrador (Fase 2)">
+          Importar compendio (bundle)…
+        </button>
+        <button class="menu__item" disabled title="Requiere autenticación de administrador (Fase 2)">
+          Exportar lecciones
+        </button>
+        <button class="menu__item" disabled title="Requiere autenticación de administrador (Fase 2)">
+          Eliminar una lección…
+        </button>
+      </div>
+    </div>
+
+    <div class="menu">
+      <button class="menu__trigger" data-menu="historial">Historial</button>
+      <div class="menu__panel" data-panel="historial">
+        <button class="menu__item" disabled title="El historial persistente se implementa en la Fase 2">
+          Ver historial
+        </button>
+      </div>
+    </div>
+
+    <div class="menu">
+      <button class="menu__trigger" data-menu="ayuda">Ayuda</button>
+      <div class="menu__panel" data-panel="ayuda">
+        <button class="menu__item" id="btnAbrirAyuda">¿Cómo funciona guali?</button>
+      </div>
+    </div>
+  </nav>
+</header>
+
+<div class="title-bar">
+  <span class="title-bar__tag">Lección activa</span>
+  <span class="title-bar__nombre" id="tituloLeccion">Ninguna lección abierta</span>
+</div>
+
+<main class="workspace">
+
+  <!-- Panel de lección activa -->
+  <section class="panel panel--leccion" aria-label="Panel de lección activa">
+    <div id="leccionContenido" class="leccion-contenido">
+      <p class="leccion-vacia">
+        Abre una lección desde el menú <strong>Lecciones</strong> para
+        ver aquí sus instrucciones.
+      </p>
+    </div>
+  </section>
+
+  <section class="panel panel--editor" aria-label="Editor de código">
+    <textarea
+      id="editorCodigo"
+      class="editor"
+      spellcheck="false"
+      placeholder="// Escribe aquí tu código Java manualmente"
+    ></textarea>
+
+    <div class="acciones">
+      
+      </button>
+    </div>
+  </section>
+
+  <section class="panel panel--consola" aria-label="Panel de consola">
+    <div class="panel__encabezado">Consola</div>
+    <pre id="consolaSalida" class="consola-salida">Esperando compilación o ejecución…</pre>
+  </section>
+
+</main>
+
+<div class="modal" id="modalAyuda" hidden>
+  <div class="modal__caja">
+    <div class="modal__encabezado">
+      <h2>Cómo usar guali</h2>
+      <button class="modal__cerrar" id="btnCerrarAyuda" aria-label="Cerrar ayuda">✕</button>
+    </div>
+    <div class="modal__cuerpo">
+      <ol>
+        <li>Abre una lección desde el menú <strong>Lecciones</strong>.</li>
+        <li>Lee las instrucciones en el panel izquierdo.</li>
+        <li>Escribe el código manualmente en el editor; evita copiar y pegar, es parte del aprendizaje.</li>
+        <li>Presiona <strong>Compilar</strong> y revisa el resultado en la consola.</li>
+        <li>Si la compilación fue exitosa, presiona <strong>Ejecutar</strong>.</li>
+      </ol>
+      <p class="modal__nota">
+        Puedes ajustar el tamaño de fuente y el tema (claro/oscuro) desde
+        el menú <strong>Configuración</strong> en cualquier momento.
+      </p>
+    </div>
+  </div>
+</div>
+
+<script src="js/app.js"></script>
+</body>
+</html>

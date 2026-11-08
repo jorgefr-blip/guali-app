@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Nueva Lección - Admin</title>
+    <style>
+        body { font-family: Arial, sans-serif; background-color: #f4f4f4; padding: 40px; margin: 0; }
+        .container { background: white; padding: 30px; border-radius: 8px; max-width: 700px; margin: auto; box-shadow: 0 0 10px rgba(0,0,0,0.1); }
+        label { display: block; margin-top: 15px; font-weight: bold; }
+        input, select, textarea { width: 100%; padding: 10px; margin-top: 6px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box; font-family: inherit; }
+        textarea { min-height: 260px; font-family: monospace; }
+        button { margin-top: 20px; padding: 10px 20px; background: #4CAF50; color: white; border: none; border-radius: 4px; cursor: pointer; font-weight: bold; }
+        .volver { display: inline-block; margin-top: 20px; margin-left: 15px; color: #666; text-decoration: none; }
+        .mensaje-error { background: #f8d7da; color: #721c24; padding: 10px; border-radius: 4px; margin-bottom: 10px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Nueva Lección</h2>
+        <div th:if="${error}" class="mensaje-error" th:text="${error}"></div>
+        <form th:action="@{/admin/lecciones/guardar}" th:object="${leccion}" method="post">
+            <label>Título (nombre de la carpeta, ej. leccion-05-bucles):</label>
+            <input type="text" th:field="*{titulo}" required maxlength="150">
+
+            <label>Objetivo:</label>
+            <select th:field="*{objetivo}" required>
+                <option value="COMPILAR_CON_ERROR">COMPILAR_CON_ERROR</option>
+                <option value="COMPILAR_EXITOSO">COMPILAR_EXITOSO</option>
+                <option value="EJECUTAR_CON_ERROR">EJECUTAR_CON_ERROR</option>
+                <option value="EJECUTAR_EXITOSO">EJECUTAR_EXITOSO</option>
+            </select>
+
+            <label>Contenido (Markdown):</label>
+            <textarea th:field="*{contenido_md}" required></textarea>
+
+            <button type="submit">Guardar lección</button>
+            <a href="/admin/lecciones" class="volver">← Cancelar</a>
+        </form>
+    </div>
+</body>
+</html>

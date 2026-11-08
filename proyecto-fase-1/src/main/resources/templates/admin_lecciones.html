@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Gestionar Lecciones - Admin</title>
+    <style>
+        body { font-family: Arial, sans-serif; background-color: #f4f4f4; padding: 20px; }
+        .container { background: white; padding: 20px; border-radius: 8px; max-width: 1000px; margin: auto; box-shadow: 0 0 10px rgba(0,0,0,0.1); }
+        h2 { text-align: center; color: #333; }
+        .btn-nuevo { display: inline-block; background: #4CAF50; color: white; padding: 10px 15px; text-decoration: none; border-radius: 5px; font-weight: bold; border: none; cursor: pointer; font-size: 14px; }
+        .btn-exportar { background: #FF9800; }
+        .btn-importar { background: #9C27B0; }
+        .btn-volver { display: inline-block; margin-top: 20px; background: #2196F3; color: white; padding: 10px 15px; text-decoration: none; border-radius: 4px; font-weight: bold; }
+        table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+        th, td { border: 1px solid #ddd; padding: 10px; text-align: left; }
+        th { background-color: #f2f2f2; }
+        .btn-eliminar { background-color: #f44336; color: white; padding: 6px 12px; border: none; border-radius: 4px; cursor: pointer; }
+        .acciones-bar { display: flex; gap: 10px; align-items: center; margin-bottom: 15px; flex-wrap: wrap; }
+        .file-input { padding: 8px; border: 1px solid #ccc; border-radius: 4px; background: white; }
+        .mensaje-exito { color: #4CAF50; font-weight: bold; margin-top: 10px; }
+        .mensaje-error { color: #f44336; font-weight: bold; margin-top: 10px; }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h2>Gestión de Lecciones</h2>
+        
+        <!-- Barra de acciones -->
+        <div class="acciones-bar">
+            <a href="/admin/lecciones/nuevo" class="btn-nuevo">+ Nueva Lección</a>
+            
+            <a href="/admin/exportar/lecciones" class="btn-nuevo btn-exportar">📤 Exportar ZIP</a>
+            
+            <form th:action="@{/admin/importar/lecciones(_csrf=${_csrf.token})}" method="post" enctype="multipart/form-data" style="display: flex; gap: 5px; align-items: center;">
+                <input type="file" name="archivoZip" accept=".zip" required class="file-input">
+                <button type="submit" class="btn-nuevo btn-importar">📥 Importar ZIP</button>
+            </form>
+        </div>
+
+        <!-- Mensajes de éxito/error -->
+        <div th:if="${exito}" class="mensaje-exito" th:text="${exito}"></div>
+        <div th:if="${error}" class="mensaje-error" th:text="${error}"></div>
+
+        <!-- Tabla de lecciones -->
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Título</th>
+                    <th>Objetivo</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="lec : ${lecciones}">
+                    <td th:text="${lec.id}"></td>
+                    <td th:text="${lec.titulo}"></td>
+                    <td th:text="${lec.objetivo}"></td>
+                    <td>
+                        <form th:action="@{/admin/lecciones/eliminar/{id}(id=${lec.id})}" method="post" style="display:inline;">
+                            <button type="submit" class="btn-eliminar" onclick="return confirm('¿Seguro que quieres eliminar esta lección?')">Eliminar</button>
+                        </form>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+        <a href="/admin/panel" class="btn-volver">← Volver al Panel</a>
+    </div>
+
+</body>
+</html>

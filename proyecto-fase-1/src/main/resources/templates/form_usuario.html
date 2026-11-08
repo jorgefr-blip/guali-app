@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Nuevo Usuario</title>
+    <style>
+        body { font-family: Arial, sans-serif; background-color: #f4f4f4; padding: 20px; }
+        .container { background: white; padding: 20px; border-radius: 8px; max-width: 500px; margin: auto; box-shadow: 0 0 10px rgba(0,0,0,0.1); }
+        h2 { text-align: center; }
+        label { display: block; margin-top: 10px; font-weight: bold; }
+        input { width: 100%; padding: 8px; margin-top: 5px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box; }
+        button { margin-top: 15px; padding: 10px 15px; background: #4CAF50; color: white; border: none; border-radius: 4px; cursor: pointer; width: 100%; font-weight: bold; }
+        .volver { display: block; text-align: center; margin-top: 15px; text-decoration: none; color: #666; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Crear Nuevo Administrador</h2>
+        
+        <form th:action="@{/admin/usuarios/guardar}" th:object="${usuario}" method="post">
+            
+            <label>Usuario (username):</label>
+            <input type="text" th:field="*{username}" required>
+
+            <label>Nombre Completo:</label>
+            <input type="text" th:field="*{nombre}" required>
+
+            <label>Contraseña:</label>
+            <input type="password" name="password_plano" required>
+
+            <button type="submit">Guardar Usuario</button>
+        </form>
+
+        <a href="/admin/usuarios" class="volver">← Volver a la lista</a>
+    </div>
+</body>
+</html>

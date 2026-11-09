@@ -2,12 +2,14 @@
 FROM maven:3.9.16-eclipse-temurin-25 AS build
 WORKDIR /app
 
-# Copiamos el pom y la carpeta libs
+# Copiamos el pom, la carpeta libs y el código
 COPY pom.xml .
 COPY libs ./libs
+COPY src ./src
 
-# Instalamos el jar local en el repositorio de Maven del contenedor
-RUN mvn install:install-file -Dfile=./libs/guali-dev-1.0.0.jar -DgroupId=edu.umg.guali -DartifactId=guali-dev -Dversion=1.0.0 -Dpackaging=jar
+# Copiamos el jar a la carpeta local de Maven (así Maven lo encuentra)
+RUN mkdir -p /root/.m2/repository/edu/umg/guali/guali-dev/1.0.0 && \
+    cp ./libs/guali-dev-1.0.0.jar /root/.m2/repository/edu/umg/guali/guali-dev/1.0.0/guali-dev-1.0.0.jar
 
 # Compilamos
 RUN mvn clean package -DskipTests

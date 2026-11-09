@@ -1,5 +1,5 @@
 # Etapa 1: Construcción (Java 25)
-FROM maven:3.9.6-eclipse-temurin-25 AS build
+FROM maven:3.9.16-eclipse-temurin-25 AS build
 WORKDIR /app
 
 # Copiamos el pom y la carpeta libs

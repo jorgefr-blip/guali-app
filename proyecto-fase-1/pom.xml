@@ -62,8 +62,6 @@
     <groupId>edu.umg.guali</groupId>
     <artifactId>guali-dev</artifactId>
     <version>1.0.0</version>
-    <scope>system</scope>
-    <systemPath>${project.basedir}/libs/guali-dev-1.0.0.jar</systemPath>
 </dependency>
 
         <dependency>
